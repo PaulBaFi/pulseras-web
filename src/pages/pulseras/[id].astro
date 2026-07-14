@@ -22,7 +22,7 @@ if (!pulsera) {
   return Astro.redirect("/");
 }
 
-const whatsappUrl = `https://wa.me/51912923822?text=${encodeURIComponent(`Hola, quiero comprar la ${pulsera.nombre}`)}`;
+const whatsappUrl = `https://wa.me/51920170213?text=${encodeURIComponent(`Hola, quiero comprar la ${pulsera.nombre}`)}`;
 ---
 
 <Layout title={`${pulsera.nombre} | Pulseras`}>
@@ -38,7 +38,7 @@ const whatsappUrl = `https://wa.me/51912923822?text=${encodeURIComponent(`Hola, 
           CATEGORIAS.map((c) => (
             <button
               type="button"
-              class="text-xs md:text-base outline-primary/50 focus:outline-2 hover:bg-tertiary/30 cursor-pointer shrink-0 snap-start rounded-full border border-slate-200 text-slate-700 py-2 px-4 bg-white active:scale-95 transition-all duration-200"
+              class="text-xs md:text-sm outline-primary/50 focus:outline-2 hover:bg-tertiary/30 cursor-pointer shrink-0 snap-start rounded-full border border-slate-200 text-slate-700 py-2 px-4 bg-white active:scale-95 transition-all duration-200"
             >
               {c.nombre}
             </button>
