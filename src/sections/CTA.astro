@@ -1,9 +1,5 @@
 ---
-import { MessageCircle } from "@lucide/astro";
-
-// Configura aquí tu número de WhatsApp (con código de país, ej. 51 para Perú)
-// y el mensaje predeterminado que recibirá tu chat.
-const whatsappPhone = "51999999999";
+const whatsappPhone = "51920170213";
 const whatsappMessage = encodeURIComponent(
   "¡Hola! Me encantaron las pulseras y me gustaría hacer una consulta o pedido personalizado. ✨",
 );
@@ -26,11 +22,9 @@ const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
       </p>
     </div>
 
-    <!-- Botón CTA de WhatsApp -->
     <div class="flex items-center justify-center gap-4 pt-2">
-      <!-- BOTÓN WHATSAPP NEO-BRUTALISTA -->
       <a
-        href="https://wa.me/TU_NUMERO_AQUI"
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="wsp-cta-button"
@@ -38,7 +32,6 @@ const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
         <div class="wsp-depth">
           <div class="wsp-plate">
             <div class="wsp-content">
-              <!-- Icono de WhatsApp SVG -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
