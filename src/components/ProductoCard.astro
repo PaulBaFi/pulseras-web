@@ -1,0 +1,132 @@
+---
+import { formatPrice } from "@/utils/formatPrice";
+import { getPulseraUrl } from "@/utils/pulseraUrl";
+import { MoveRight } from "@lucide/astro";
+import Image from "astro/components/Image.astro";
+
+const { pulsera: p } = Astro.props;
+---
+
+<div
+  class="bg-slate-50/50 hover:bg-white border border-slate-200 rounded-xl p-2.5 hover:shadow-md hover:scale-102 transition-transform flex flex-row items-center sm:flex-col gap-3 sm:gap-0 h-full"
+>
+  <div class="bg-slate-100 w-24 h-24 xs:w-28 xs:h-28 sm:w-full sm:h-auto aspect-3/4 sm:aspect-4/3 overflow-hidden rounded-lg shrink-0 sm:mb-2">
+    <Image
+      src={p.imagenes[0]}
+      width={400}
+      height={300}
+      alt={`Imagen de ${p.nombre}`}
+      loading="lazy"
+      class="object-center object-cover h-full w-full bg-blend-multiply"
+    />
+  </div>
+
+  <div class="flex flex-col flex-grow justify-between min-w-0">
+    <div>
+      <div class="w-full flex flex-col md:flex-row md:items-baseline md:justify-between px-1 text-slate-700 gap-0.5 md:gap-4 mb-1">
+        <strong class="text-sm md:text-base truncate sm:whitespace-normal sm:line-clamp-2">
+          {p.nombre}
+        </strong>
+        <b class="text-primary text-sm md:text-base shrink-0">
+          {formatPrice(p.precio)}
+        </b>
+      </div>
+
+      <p class="mb-3 px-1 line-clamp-2 text-xs md:text-sm text-slate-500">
+        {p.descripcion_corta}
+      </p>
+    </div>
+
+    <a href={getPulseraUrl(p.id)} class="card-button py-1 md:py-1.5 text-xs md:text-sm">
+      <span>
+        Ver detalles
+        <MoveRight class="w-4 h-4 md:w-5 md:h-5" stroke-width={2} />
+      </span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .card-button {
+    --accent: var(--color-primary);
+
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    border-radius: 0.75rem;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.25s ease;
+  }
+
+  .card-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    opacity: 0.12;
+
+    background-image:
+      radial-gradient(rgb(255 255 255 / 80%) 20%, transparent 20%),
+      radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%);
+
+    background-size: 8px 8px;
+    background-position:
+      0 0,
+      4px 4px;
+
+    animation: dots 0.45s linear infinite;
+  }
+
+  .card-button span {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    transition: 0.25s ease;
+  }
+
+  .card-button svg {
+    transition: 0.25s ease;
+  }
+
+  .card-button:hover span {
+    transform: translateX(4px);
+  }
+
+  .card-button:hover svg {
+    transform: translateX(4px);
+  }
+
+  .card-button:hover {
+    filter: brightness(1.05);
+  }
+
+  .card-button:active span {
+    transform: translateY(1px);
+  }
+
+  @keyframes dots {
+    from {
+      background-position:
+        0 0,
+        4px 4px;
+    }
+
+    to {
+      background-position:
+        8px 0,
+        12px 4px;
+    }
+  }
+</style>

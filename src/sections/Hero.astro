@@ -1,0 +1,37 @@
+---
+import BaseButton from "@/components/BaseButton.astro";
+---
+
+<header class="px-(--margin-mobile) md:px-(--margin-desktop)">
+  <div class="hero-container container mx-auto h-[480px] rounded-3xl">
+    <div class="flex items-center h-full w-full">
+      <div class="ml-6 md:ml-24 max-w-[90%] md:max-w-[50%]">
+        <h1 class="text-4xl md:text-5xl font-bold">
+          <span class="text-primary">Pulseras únicas</span> para <br class="hidden md:block" /> contar tu
+          propia historia
+        </h1>
+
+        <p class="mb-8 mt-4 text-sm md:text-base">
+          Cada pulsera se arma perla por perla, a tu medida, para celebrar tus
+          raíces, tus momentos especiales y a las personas que más amas.
+        </p>
+        <BaseButton text="Ver catálogo" link="#productos" />
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero-container {
+    background-image: url("@/assets/bg-hero-mobile.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 768px) {
+    .hero-container {
+      background-image: url("@/assets/bg-hero-section.svg");
+    }
+  }
+</style>

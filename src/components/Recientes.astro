@@ -1,0 +1,30 @@
+---
+import RecientesSlider from "@/components/RecientesSlider";
+import { PULSERAS_DATA } from "@/lib/pulseras";
+import { Zap } from "@lucide/astro";
+import Heading from "./Heading.astro";
+
+interface Props {
+  excludeId?: string;
+}
+
+const { excludeId } = Astro.props;
+
+const recientes = PULSERAS_DATA.filter((p) => p.id !== excludeId)
+  .slice(0, 8)
+  .map((p) => ({
+    id: p.id,
+    nombre: p.nombre,
+    imagen: p.imagenes[0],
+    precio: p.precio,
+    descripcion_corta: p.descripcion_corta,
+  }));
+---
+
+<section class="px-(--margin-mobile) md:px-(--margin-desktop) pb-24">
+  <div class="container mx-auto space-y-6">
+    <Heading title="Recientes" icon={Zap} />
+
+    <RecientesSlider client:visible pulseras={recientes} />
+  </div>
+</section>

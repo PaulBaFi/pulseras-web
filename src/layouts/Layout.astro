@@ -1,0 +1,52 @@
+---
+import "@/styles/global.css";
+import Navbar from "@/components/Navbar.astro";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta
+      name="description"
+      content="Creamos pulseras de cuentas personalizadas con acabados caseros de alta calidad. Elige tus colores, añade nombres o palabras especiales y recibe un accesorio único hecho a mano con amor y directo a tu hogar."
+    />
+
+    <link
+      rel="preload"
+      href="/fonts/Quicksand/Quicksand-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Quicksand/Quicksand-Bold.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Playfair_Display/PlayfairDisplay-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <Navbar />
+    <slot />
+  </body>
+</html>

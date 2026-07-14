@@ -1,0 +1,174 @@
+---
+import logo from "/iconlogo.svg?url";
+import { Image } from "astro:assets";
+import { ChevronDown, Search } from "@lucide/astro";
+import WhatsApp from "@/icons/WhatsApp.astro";
+---
+
+<div
+  class="hidden md:block bg-slate-100 px-(--margin-mobile) md:px-(--margin-desktop)"
+>
+  <div class="container mx-auto flex items-center justify-between gap-8 py-1">
+    <a
+      href="https://wa.me/51912923822"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex gap-2 items-center font-bold text-slate-600 px-3 text-sm hover:text-primary transition"
+    >
+      <WhatsApp size={16} />
+      +51 912 923 822
+    </a>
+
+    <div class="flex gap-4">
+      <a
+        href="#nosotros"
+        class="font-bold text-slate-600 px-3 text-sm hover:text-primary transition"
+        >Nosotros</a
+      >
+      <a
+        href="#soporte"
+        class="font-bold text-slate-600 px-3 text-sm hover:text-primary transition"
+        >Soporte</a
+      >
+    </div>
+  </div>
+</div>
+
+<header
+  id="site-header"
+  class="sticky top-0 bg-white z-50 px-(--margin-mobile) md:px-(--margin-desktop) py-3 transition-shadow duration-200"
+>
+  <div
+    class="container mx-auto flex items-center justify-between md:grid md:grid-cols-4 gap-4 md:gap-8"
+  >
+    <input type="checkbox" id="menu-toggle" class="peer hidden" />
+
+    <a href="/" class="inline-flex items-center gap-2 z-50 w-fit">
+      <Image src={logo} width={44} height={32} alt="Logo" loading="eager" />
+      <span class="tracking-wider uppercase font-bold text-xl text-primary"
+        >Pulseras</span
+      >
+    </a>
+
+    <label
+      for="menu-toggle"
+      class="cursor-pointer p-2 md:hidden z-50 select-none"
+      aria-label="Abrir menú"
+    >
+      <div
+        class="w-6 h-0.5 bg-slate-800 my-1.5 transition-all duration-300 origin-center raw-bar-1"
+      >
+      </div>
+      <div
+        class="w-6 h-0.5 bg-slate-800 my-1.5 transition-all duration-300 raw-bar-2"
+      >
+      </div>
+      <div
+        class="w-6 h-0.5 bg-slate-800 my-1.5 transition-all duration-300 origin-center raw-bar-3"
+      >
+      </div>
+    </label>
+
+    <div
+      class="fixed inset-0 bg-white z-40 flex flex-col gap-6 p-6 pt-24
+      translate-x-full peer-checked:translate-x-0 transition-transform duration-300 ease-in-out
+      md:static md:translate-x-0 md:flex-row md:p-0 md:col-span-3 md:grid md:grid-cols-3 md:items-center"
+    >
+      <div class="w-full md:col-span-2">
+        <label class="w-full relative block">
+          <input
+            placeholder="Buscar pulseras.."
+            type="search"
+            class="w-full bg-slate-100 p-3 pl-4 pr-12 text-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20"
+          />
+          <button
+            class="absolute text-slate-700 top-1/2 -translate-y-1/2 right-1 p-2 rounded-full bg-white hover:bg-slate-100 transition"
+          >
+            <Search size={20} stroke-width={2} />
+          </button>
+        </label>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 md:col-span-1">
+        <label class="w-full relative block">
+          <input
+            placeholder="Material"
+            type="text"
+            class="w-full bg-slate-100 p-3 pl-4 pr-12 text-slate-700 rounded-full focus:outline-none"
+          />
+          <button
+            class="absolute text-slate-700 top-1/2 -translate-y-1/2 right-1 p-2 rounded-full bg-white pointer-events-none"
+          >
+            <ChevronDown size={20} stroke-width={2} />
+          </button>
+        </label>
+
+        <label class="w-full relative block">
+          <input
+            placeholder="Color"
+            type="text"
+            class="w-full bg-slate-100 p-3 pl-4 pr-12 text-slate-700 rounded-full focus:outline-none"
+          />
+          <button
+            class="absolute text-slate-700 top-1/2 -translate-y-1/2 right-1 p-2 rounded-full bg-white pointer-events-none"
+          >
+            <ChevronDown size={20} stroke-width={2} />
+          </button>
+        </label>
+      </div>
+
+      <div class="flex flex-col gap-4 border-t border-slate-200 pt-6 md:hidden">
+        <a href="#nosotros" class="font-bold text-slate-600 text-lg">Nosotros</a
+        >
+        <a href="#soporte" class="font-bold text-slate-600 text-lg">Soporte</a>
+        <a
+          href="https://wa.me/51912923822"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex gap-2 items-center font-bold text-emerald-600 text-lg mt-2"
+        >
+          <WhatsApp size={20} color="#009966" />
+          Escríbenos por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  #menu-toggle:checked ~ label div.raw-bar-1 {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #menu-toggle:checked ~ label div.raw-bar-2 {
+    opacity: 0;
+  }
+  #menu-toggle:checked ~ label div.raw-bar-3 {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  body:has(#menu-toggle:checked) {
+    overflow: hidden;
+  }
+
+  #site-header.is-scrolled {
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+</style>
+
+<script>
+  function updateHeaderShadow() {
+    const header = document.getElementById("site-header");
+    if (!header) return;
+    header.classList.toggle("is-scrolled", window.scrollY > 0);
+  }
+
+  function initHeaderShadow() {
+    updateHeaderShadow();
+    window.addEventListener("scroll", updateHeaderShadow, { passive: true });
+  }
+
+  document.addEventListener("astro:page-load", initHeaderShadow);
+  if (!("astro" in window)) {
+    document.addEventListener("DOMContentLoaded", initHeaderShadow);
+  }
+</script>

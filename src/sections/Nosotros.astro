@@ -1,0 +1,91 @@
+---
+import Heading from "@/components/Heading.astro";
+import { HeartHandshake, Lamp, ShieldCheck, Truck } from "@lucide/astro";
+
+const TrustData = [
+  {
+    title: "Hecho 100% con Amor",
+    desc: "Cada pulsera es armada de forma única y artesanal por las manos de nuestra pequeña artista, cuidando cada detalle.",
+    icon: HeartHandshake
+  },
+  {
+    title: "Envíos de Confianza",
+    desc: "Despachamos tu pedido con empaques seguros y protegidos para que tus joyas lleguen perfectas hasta tu hogar.",
+    icon: Truck
+  },
+  {
+    title: "Compra 100% Segura",
+    desc: "Procesos transparentes y canales de atención directa para resolver cualquier duda al instante.",
+    icon: ShieldCheck
+  },
+];
+---
+
+<section id="nosotros" class="px-(--margin-mobile) md:px-(--margin-desktop) py-16 md:py-24">
+  <div class="container mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 items-center">
+    
+    <div class="lg:col-span-2 space-y-6">
+      <Heading title="Acerca de Nosotros" icon={Lamp} />
+      <p class="leading-relaxed text-slate-700 text-pretty text-sm md:text-base">
+        Todo comenzó en una tarde llena de colores, hilos y cuentas esparcidas
+        sobre la mesa de la sala. Con una curiosidad infinita y una gran dosis
+        de paciencia, nuestra pequeña creadora descubrió que su pasatiempo
+        favorito podía convertirse en algo mágico: una forma de compartir
+        alegría y llevar un pedacito de su arte a los demás. Lo que empezó como
+        un juego para armar pulseras para su familia y amigas, pronto se
+        transformó en un tierno emprendimiento.
+      </p>
+      <p class="leading-relaxed text-slate-700 text-pretty text-sm md:text-base">
+        Cada diseño está pensado por ella, combinando la elegancia de las perlas
+        con la diversión de las caritas sonrientes y, por supuesto, los
+        orgullosos colores rojo y blanco de nuestra patria.
+      </p>
+
+      <div class="mt-8 md:mt-12 w-24 h-1 rounded-md bg-secondary transition-all duration-300 hover:w-32"></div>
+    </div>
+
+    <div
+      class="ambient-container lg:col-span-3 rounded-3xl flex items-center justify-center p-4 sm:p-8"
+    >
+      <div
+        class="bg-white/85 sm:bg-white/70 rounded-2xl shadow-md w-full max-w-xl backdrop-blur-xs p-5 sm:p-8 flex flex-col justify-center gap-5 sm:gap-6"
+      >
+        {TrustData.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div class="flex items-start gap-3 sm:gap-4">
+              <div class="p-2 bg-tertiary/30 rounded-lg text-primary mt-0.5 shrink-0">
+                <Icon class="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+              <div class="space-y-1">
+                <strong class="font-bold text-slate-700 text-base sm:text-lg leading-tight block">
+                  {item.title}
+                </strong>
+                <p class="text-xs sm:text-sm text-slate-600 leading-normal text-pretty">
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .ambient-container {
+    height: 420px;
+    background-image: url("@/assets/bg-ambient.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 768px) {
+    .ambient-container {
+      height: 518px;
+    }
+  }
+</style>

@@ -1,0 +1,240 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/components/Footer.astro";
+import Recientes from "@/components/Recientes.astro";
+import { CATEGORIAS } from "@/lib/catalogo";
+import { PULSERAS_DATA } from "@/lib/pulseras";
+import { getPulseraPorSlug } from "@/lib/resolver";
+import { formatPrice } from "@/utils/formatPrice";
+import { ArrowLeft, ChevronDown, MoveRight, Star } from "@lucide/astro";
+import ProductGallery from "@/components/ProductGallery";
+
+export function getStaticPaths() {
+  return PULSERAS_DATA.map((p) => ({
+    params: { id: p.id.toLowerCase() },
+  }));
+}
+
+const { id } = Astro.params;
+const pulsera = id ? getPulseraPorSlug(id) : undefined;
+
+if (!pulsera) {
+  return Astro.redirect("/");
+}
+
+const whatsappUrl = `https://wa.me/51912923822?text=${encodeURIComponent(`Hola, quiero comprar la ${pulsera.nombre}`)}`;
+---
+
+<Layout title={`${pulsera.nombre} | Pulseras`}>
+  <main>
+    <section
+      class="px-(--margin-mobile) md:px-(--margin-desktop) pb-8 space-y-6"
+    >
+      <div
+        style="mask-image: linear-gradient(to right, black 95%, transparent 100%);"
+        class="container relative mx-auto flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth py-2 px-4"
+      >
+        {
+          CATEGORIAS.map((c) => (
+            <button
+              type="button"
+              class="text-xs md:text-base outline-primary/50 focus:outline-2 hover:bg-tertiary/30 cursor-pointer shrink-0 snap-start rounded-full border border-slate-200 text-slate-700 py-2 px-4 bg-white active:scale-95 transition-all duration-200"
+            >
+              {c.nombre}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="container mx-auto space-y-6">
+        <nav class="flex items-center gap-2 text-sm text-slate-400">
+          <a
+            href="/"
+            class="inline-flex items-center gap-2 hover:text-primary transition-colors"
+          >
+            <ArrowLeft size={20} stroke-width={2} />
+            Principal
+          </a>
+          <span aria-hidden="true">•</span>
+          <span class="text-slate-700">Detalles del producto</span>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div class="relative">
+            <ProductGallery
+              client:load
+              images={pulsera.imagenes}
+              alt={pulsera.nombre}
+            />
+          </div>
+
+          <div class="space-y-6">
+            <div>
+              <h1 class="text-3xl md:text-4xl font-serif text-slate-800 mb-3">
+                {pulsera.nombre}
+              </h1>
+
+              <div class="inline-flex items-center gap-2 text-sm">
+                <Star
+                  size={18}
+                  stroke-width={0}
+                  fill="#FBBF24"
+                  class="text-amber-400"
+                />
+                <span class="font-bold text-slate-700">4.8</span>
+                <span class="text-slate-500">(3)</span>
+                <a
+                  href="#soporte"
+                  class="text-primary font-bold hover:underline"
+                >
+                  Nuevas reseñas
+                </a>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <details
+                class="group rounded-xl border border-slate-200 bg-white overflow-hidden transition-all duration-300"
+                open
+              >
+                <summary
+                  class="flex cursor-pointer items-center justify-between px-4 py-3 font-bold text-slate-700 list-none outline-none transition-all duration-300 group-open:rounded-b-none"
+                >
+                  Descripción
+                  <ChevronDown
+                    size={20}
+                    stroke-width={2}
+                    class="text-slate-400 transition-transform duration-300 group-open:rotate-180"
+                  />
+                </summary>
+                <div
+                  class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-all duration-300 ease-in-out"
+                >
+                  <div class="overflow-hidden">
+                    <p class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
+                      {pulsera.descripcion_larga}
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details
+                class="group rounded-xl border border-slate-200 bg-white overflow-hidden transition-all duration-300"
+                open
+              >
+                <summary
+                  class="flex cursor-pointer items-center justify-between px-4 py-3 font-bold text-slate-700 list-none outline-none transition-all duration-300 group-open:rounded-b-none"
+                >
+                  Colores
+                  <ChevronDown
+                    size={20}
+                    stroke-width={2}
+                    class="text-slate-400 transition-transform duration-300 group-open:rotate-180"
+                  />
+                </summary>
+                <div
+                  class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-all duration-300 ease-in-out"
+                >
+                  <div class="overflow-hidden">
+                    <div class="px-4 pb-4">
+                      <div class="flex flex-wrap gap-4">
+                        {
+                          pulsera.variaciones_color.map((color) => (
+                            <div class="flex flex-col items-center gap-1.5">
+                              <span
+                                class="size-8 rounded-full border border-slate-200 shadow-sm"
+                                style={`background-color: ${color.hex};`}
+                                title={color.color_nombre}
+                              />
+                              <span class="text-xs text-slate-500">
+                                {color.color_nombre}
+                              </span>
+                            </div>
+                          ))
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div
+              class="flex items-center justify-between gap-4 rounded-2xl bg-[#1D242D] px-6 py-4"
+            >
+              <span class="text-2xl md:text-3xl font-serif text-white">
+                {formatPrice(pulsera.precio)}
+              </span>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-bold text-slate-800 hover:bg-slate-100 transition-colors shrink-0"
+              >
+                Comprar
+                <MoveRight size={18} stroke-width={2} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Recientes excludeId={pulsera.id} />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details {
+    interpolate-size: allow-keywords;
+  }
+
+  details::details-content {
+    opacity: 0;
+    block-size: 0;
+    transition:
+      content-visibility 0.4s allow-discrete,
+      opacity 0.4s,
+      block-size 0.4s;
+  }
+
+  details[open]::details-content {
+    opacity: 1;
+    block-size: auto;
+  }
+</style>
+
+<script>
+  const slides = document.querySelectorAll<HTMLElement>(".galeria-slide");
+  const dots = document.querySelectorAll<HTMLButtonElement>(".galeria-dot");
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const index = Number(dot.dataset.dot);
+
+      slides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? "1" : "0";
+      });
+
+      dots.forEach((d, i) => {
+        d.style.backgroundColor = i === index ? "#475569" : "#cbd5e1";
+      });
+    });
+  });
+</script>

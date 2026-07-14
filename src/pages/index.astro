@@ -1,0 +1,25 @@
+---
+import FAQs from "@/components/FAQs.astro";
+import Footer from "@/components/Footer.astro";
+import Layout from "@/layouts/Layout.astro";
+import Collection from "@/sections/Collection.astro";
+import CTA from "@/sections/CTA.astro";
+import Hero from "@/sections/Hero.astro";
+import Productos from "@/sections/Productos.astro";
+import Nosotros from "@/sections/Nosotros.astro";
+---
+
+<Layout title="Página Principal">
+  <Hero />
+  <main>
+    <Productos />
+    <Collection />
+  </main>
+
+  <Nosotros />
+  <CTA />
+  <!-- 
+    <FAQs />
+    -->
+  <Footer />
+</Layout>

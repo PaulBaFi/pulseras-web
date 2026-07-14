@@ -1,0 +1,293 @@
+---
+import { MessageCircle } from "@lucide/astro";
+
+// Configura aquí tu número de WhatsApp (con código de país, ej. 51 para Perú)
+// y el mensaje predeterminado que recibirá tu chat.
+const whatsappPhone = "51999999999";
+const whatsappMessage = encodeURIComponent(
+  "¡Hola! Me encantaron las pulseras y me gustaría hacer una consulta o pedido personalizado. ✨",
+);
+
+const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
+---
+
+<section
+  class="px-(--margin-mobile) md:px-(--margin-desktop) py-16 md:py-24 bg-tertiary/30"
+>
+  <div class="container mx-auto max-w-4xl text-center space-y-8">
+    <div class="space-y-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-700 text-pretty">
+        ¿Tienes dudas o buscas un pedido personalizado?
+      </h2>
+      <p
+        class="text-slate-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed text-pretty"
+      >
+        ¡Estamos listos para atenderte con mucho amor!
+      </p>
+    </div>
+
+    <!-- Botón CTA de WhatsApp -->
+    <div class="flex items-center justify-center gap-4 pt-2">
+      <!-- BOTÓN WHATSAPP NEO-BRUTALISTA -->
+      <a
+        href="https://wa.me/TU_NUMERO_AQUI"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="wsp-cta-button"
+      >
+        <div class="wsp-depth">
+          <div class="wsp-plate">
+            <div class="wsp-content">
+              <!-- Icono de WhatsApp SVG -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="wsp-icon"
+              >
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                ></path>
+              </svg>
+              <span>Escríbenos por WhatsApp</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wsp-cta-button {
+    --stone-50: #fafaf9;
+    --stone-800: #1a1c1a;
+    --wsp-green: #25d366;
+    --wsp-green-dark: #128c7e;
+
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    line-height: 1;
+    font-size: 1rem;
+    border-radius: 1rem;
+    outline: 2px solid transparent;
+    outline-offset: 6px;
+    color: var(--stone-50);
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .wsp-cta-button:active {
+    outline-color: var(--wsp-green);
+  }
+
+  .wsp-cta-button:focus-visible {
+    outline-color: var(--wsp-green);
+    outline-style: dashed;
+  }
+
+  /* Fondo de estrella giratoria (Efecto Hover) */
+  .wsp-cta-button::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    height: 200%;
+    max-height: 100px;
+    aspect-ratio: 1;
+    margin: auto;
+    background: var(--wsp-green-dark);
+    clip-path: polygon(
+      100% 50%,
+      91.48% 56.57%,
+      97.55% 65.45%,
+      87.42% 69.07%,
+      90.45% 79.39%,
+      79.7% 79.7%,
+      79.39% 90.45%,
+      69.07% 87.42%,
+      65.45% 97.55%,
+      56.57% 91.48%,
+      50% 100%,
+      43.43% 91.48%,
+      34.55% 97.55%,
+      30.93% 87.42%,
+      20.61% 90.45%,
+      20.3% 79.7%,
+      9.55% 79.39%,
+      12.58% 69.07%,
+      2.45% 65.45%,
+      8.52% 56.57%,
+      0% 50%,
+      8.52% 43.43%,
+      2.45% 34.55%,
+      12.58% 30.93%,
+      9.55% 20.61%,
+      20.3% 20.3%,
+      20.61% 9.55%,
+      30.93% 12.58%,
+      34.55% 2.45%,
+      43.43% 8.52%,
+      50% 0%,
+      56.57% 8.52%,
+      65.45% 2.45%,
+      69.07% 12.58%,
+      79.39% 9.55%,
+      79.7% 20.3%,
+      90.45% 20.61%,
+      87.42% 30.93%,
+      97.55% 34.55%,
+      91.48% 43.43%
+    );
+    animation: wsp-star-rotate 6s linear infinite;
+    opacity: 0.25;
+    transition:
+      opacity 150ms ease,
+      background-color 150ms ease;
+  }
+
+  .wsp-cta-button:hover::before {
+    opacity: 0.85;
+    background: var(--wsp-green);
+  }
+
+  /* Capa de Profundidad 3D (Extrusión) */
+  .wsp-depth {
+    padding: 2px;
+    border-radius: 1rem;
+    background-color: var(--wsp-green);
+    transform: translate(-4px, -4px);
+    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+    box-shadow:
+      0.5px 0.5px 0 0 var(--wsp-green),
+      1px 1px 0 0 var(--wsp-green),
+      1.5px 1.5px 0 0 var(--wsp-green),
+      2px 2px 0 0 var(--wsp-green),
+      2.5px 2.5px 0 0 var(--wsp-green),
+      3px 3px 0 0 var(--wsp-green),
+      0 0 0 2px var(--stone-800),
+      0.5px 0.5px 0 2px var(--stone-800),
+      1px 1px 0 2px var(--stone-800),
+      1.5px 1.5px 0 2px var(--stone-800),
+      2px 2px 0 2px var(--stone-800),
+      2.5px 2.5px 0 2px var(--stone-800),
+      3px 3px 0 2px var(--stone-800),
+      3.5px 3.5px 0 2px var(--stone-800),
+      4px 4px 0 2px var(--stone-800),
+      0 0 0 4px var(--stone-50),
+      0.5px 0.5px 0 4px var(--stone-50),
+      1px 1px 0 4px var(--stone-50),
+      1.5px 1.5px 0 4px var(--stone-50),
+      2px 2px 0 4px var(--stone-50),
+      2.5px 2.5px 0 4px var(--stone-50),
+      3px 3px 0 4px var(--stone-50),
+      3.5px 3.5px 0 4px var(--stone-50),
+      4px 4px 0 4px var(--stone-50);
+  }
+
+  /* Animación de click (Aplanado de la extrusión) */
+  .wsp-cta-button:hover .wsp-depth {
+    transform: translate(0, 0);
+    box-shadow:
+      0 0 0 0 var(--wsp-green),
+      0 0 0 0 var(--wsp-green),
+      0 0 0 2px var(--stone-800),
+      0 0 0 4px var(--stone-50);
+  }
+
+  /* Placa interior oscura */
+  .wsp-plate {
+    position: relative;
+    pointer-events: none;
+    border-radius: calc(1rem - 2px);
+    background-color: var(--stone-800);
+    overflow: hidden;
+  }
+
+  /* Patrón de puntos animado */
+  .wsp-plate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    opacity: 0.15;
+    background-image:
+      radial-gradient(var(--wsp-green) 20%, transparent 20%),
+      radial-gradient(var(--wsp-green) 20%, transparent 20%);
+    background-position:
+      0 0,
+      4px 4px;
+    background-size: 8px 8px;
+    mix-blend-mode: screen;
+    animation: wsp-dots 0.4s infinite linear;
+    transition: opacity 150ms ease;
+  }
+
+  .wsp-cta-button:hover .wsp-plate::before {
+    opacity: 0.35;
+  }
+
+  /* Contenido y Alineación */
+  .wsp-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    gap: 0.65rem;
+    filter: drop-shadow(0 -1px 0 var(--stone-800));
+  }
+
+  .wsp-content span {
+    display: inline-block;
+  }
+
+  /* Animación del Icono */
+  .wsp-icon {
+    color: var(--wsp-green);
+    transition:
+      transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      color 0.2s ease;
+  }
+
+  .wsp-cta-button:hover .wsp-icon {
+    transform: scale(1.2) rotate(-8deg);
+    color: var(--stone-50);
+  }
+
+  .wsp-content:active {
+    transform: translateY(1px);
+  }
+
+  /* Keyframes */
+  @keyframes wsp-star-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes wsp-dots {
+    0% {
+      background-position:
+        0 0,
+        4px 4px;
+    }
+    100% {
+      background-position:
+        8px 0,
+        12px 4px;
+    }
+  }
+</style>

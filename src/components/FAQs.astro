@@ -1,0 +1,66 @@
+---
+import { Plus } from "@lucide/astro";
+import { faqs, type FAQ } from "@/lib/faqs";
+---
+
+<article class="relative py-16 md:pb-48 px-4">
+  <div class="container mx-auto max-w-3xl flex flex-col gap-4">
+    {
+      faqs.map((f: FAQ, i: number) => (
+        <details
+          name="faq"
+          open={i === 0}
+          class="group rounded-2xl bg-linear-to-br from-primary/60 to-surface not-open:hover:from-primary/80 not-open:hover:to-surface/80 p-px overflow-hidden transition-all duration-300 not-open:hover:shadow-xl group-open:shadow-2xl"
+        >
+          <summary class="flex items-center justify-between gap-4 cursor-pointer list-none p-4 md:p-6 outline-none transition-all duration-300 text-ink/60 not-open:hover:text-ink group-open:text-ink bg-surface/70 not-open:hover:bg-surface/60 group-open:bg-surface/40 group-open:hover:bg-surface/40 rounded-2xl group-open:rounded-b-none">
+            <span class="text-base md:text-lg font-semibold tracking-wide">
+              {f.pregunta}
+            </span>
+
+            <span class="flex items-center justify-center text-ink/40 group-open:text-ink transition-all duration-300">
+              <Plus class="group-open:rotate-45" size={22} />
+            </span>
+          </summary>
+
+          <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-all duration-300 ease-in-out group-open:bg-surface/40">
+            <div class="overflow-hidden">
+              <p class="px-4 pb-4 md:px-6 md:pb-6 text-sm md:text-base leading-relaxed text-zinc-800">
+                {f.respuesta}
+              </p>
+            </div>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+
+  <!-- Efecto de Desvanecido -->
+  <div
+    class="fixed left-0 bottom-0 w-full h-16 md:h-48 bg-linear-to-b from-transparent to-surface/90 z-20 pointer-events-none"
+  >
+  </div>
+</article>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details {
+    interpolate-size: allow-keywords;
+  }
+
+  details::details-content {
+    opacity: 0;
+    block-size: 0;
+    transition:
+      content-visibility 0.4s allow-discrete,
+      opacity 0.4s,
+      block-size 0.4s;
+  }
+
+  details[open]::details-content {
+    opacity: 1;
+    block-size: auto;
+  }
+</style>
