@@ -1,0 +1,176 @@
+---
+import { Search, X } from "@lucide/astro";
+---
+
+<div class="relative w-full z-50">
+  <div class="relative group">
+    <input
+      id="search-input"
+      type="search"
+      placeholder="¿Qué pulsera buscas?"
+      autocomplete="off"
+      class="w-full bg-slate-100 p-3 pl-5 pr-12 text-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm md:text-base appearance-none transition-all"
+    />
+
+    <button
+      id="clear-search"
+      type="button"
+      aria-label="Limpiar búsqueda"
+      class="absolute right-12 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-primary transition-all hidden"
+    >
+      <X size={18} />
+    </button>
+
+    <button
+      class="absolute text-slate-700 top-1/2 -translate-y-1/2 right-1 p-2 rounded-full bg-white hover:bg-slate-100 transition pointer-events-none"
+    >
+      <Search size={20} stroke-width={2} />
+    </button>
+  </div>
+
+  <div
+    id="search-results"
+    class="relative md:absolute md:top-full md:left-0 w-full bg-white rounded-2xl mt-3 md:shadow-2xl border border-slate-100 hidden overflow-hidden max-h-[350px] overflow-y-auto overscroll-contain transition-all duration-200 z-[9999]"
+  >
+    <ul id="results-list" class="p-2 divide-y divide-slate-100"></ul>
+  </div>
+</div>
+
+<script>
+  import { getPulseraUrl } from "@/utils/pulseraUrl";
+import Fuse from "fuse.js";
+
+  interface PulseraIndex {
+    id: string;
+    nombre: string;
+    precio: number;
+    link: string;
+    categoria?: string;
+  }
+
+  function initBuscador() {
+    const input = document.getElementById("search-input") as HTMLInputElement | null;
+    const resultsContainer = document.getElementById("search-results") as HTMLDivElement | null;
+    const resultsList = document.getElementById("results-list") as HTMLUListElement | null;
+    const clearBtn = document.getElementById("clear-search") as HTMLButtonElement | null;
+
+    if (!input || !resultsContainer || !resultsList || !clearBtn) return;
+
+    let fuse: Fuse<PulseraIndex> | null = null;
+    let debounceTimer: number;
+
+    (async () => {
+      try {
+        const res = await fetch("/search.json"); 
+        const data = await res.json();
+        
+        fuse = new Fuse(data, {
+          keys: ["nombre", "categoria"],
+          threshold: 0.4,
+        });
+      } catch (e) {
+        console.error("Error al cargar el índice de pulseras", e);
+      }
+    })();
+
+    const toggleClearBtn = (show: boolean) => {
+      clearBtn.classList.toggle("hidden", !show);
+    };
+
+    const renderResults = (results: any[]) => {
+      if (results.length === 0) {
+        resultsList.innerHTML = `
+          <li class="p-8 text-center text-slate-400 text-sm italic">
+            No se encontraron pulseras que coincidan.
+          </li>`;
+        return;
+      }
+
+      resultsList.innerHTML = results
+        .slice(0, 8)
+        .map(({ item }) => {
+          if (!item.id && item.categoria) return ""; 
+
+          return `
+            <li>
+              <a href=${getPulseraUrl(item.id)} class="flex items-center justify-between p-3.5 active:bg-primary/5 md:hover:bg-primary/5 transition-colors group rounded-xl gap-4">
+                <div class="flex flex-col min-w-0">
+                  <span class="font-bold text-slate-800 text-sm md:text-base group-hover:text-primary transition-colors truncate">
+                    ${item.nombre}
+                  </span>
+                  ${item.categoria ? `
+                    <span class="inline-block text-[10px] text-primary font-semibold tracking-wide uppercase mt-0.5">
+                      ${item.categoria}
+                    </span>
+                  ` : ""}
+                </div>
+                <div class="shrink-0 text-right">
+                  <span class="text-xs text-slate-400 block">Precio</span>
+                  <span class="text-sm font-black text-slate-900">S/. ${item.precio}</span>
+                </div>
+              </a>
+            </li>
+          `;
+        })
+        .join("");
+    };
+
+    input.addEventListener("input", (e) => {
+      const query = (e.target as HTMLInputElement).value.trim();
+      clearTimeout(debounceTimer);
+
+      toggleClearBtn(query.length > 0);
+
+      if (query.length < 2) {
+        resultsContainer.classList.add("hidden");
+        return;
+      }
+
+      debounceTimer = window.setTimeout(() => {
+        if (fuse) {
+          const results = fuse.search(query);
+          renderResults(results);
+          resultsContainer.classList.remove("hidden");
+        }
+      }, 150);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      input.value = "";
+      toggleClearBtn(false);
+      resultsContainer.classList.add("hidden");
+      input.focus();
+    });
+
+    document.addEventListener("click", (e) => {
+      if (window.innerWidth >= 768) {
+        if (!input.contains(e.target as Node) && !resultsContainer.contains(e.target as Node)) {
+          resultsContainer.classList.add("hidden");
+        }
+      }
+    });
+
+    input.addEventListener("focus", () => {
+      if (input.value.trim().length >= 2) {
+        resultsContainer.classList.remove("hidden");
+      }
+    });
+  }
+
+  function registrarBuscador() {
+    setTimeout(initBuscador, 50);
+  }
+
+  registrarBuscador();
+  document.addEventListener("astro:after-swap", registrarBuscador);
+  document.addEventListener("astro:page-load", registrarBuscador);
+</script>
+
+<style>
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+  }
+</style>
