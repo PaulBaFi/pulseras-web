@@ -8,7 +8,7 @@ const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
 ---
 
 <section
-  class="px-(--margin-mobile) md:px-(--margin-desktop) py-16 md:py-24 bg-tertiary/30"
+  class="cta-container px-(--margin-mobile) md:px-(--margin-desktop) py-16 md:py-24 bg-tertiary/30"
 >
   <div class="container mx-auto max-w-4xl text-center space-y-8">
     <div class="space-y-4">
@@ -58,6 +58,13 @@ const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
 </section>
 
 <style>
+  .cta-container {
+    background-image: url('@/assets/bg-cta.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
   .wsp-cta-button {
     --stone-50: #fafaf9;
     --stone-800: #1a1c1a;
