@@ -118,45 +118,43 @@ const whatsappUrl = `https://wa.me/51920170213?text=${encodeURIComponent(`Hola, 
                 </div>
               </details>
 
-              <details
-                class="group rounded-xl border border-slate-200 bg-white overflow-hidden transition-all duration-300"
-                open
-              >
-                <summary
-                  class="flex cursor-pointer items-center justify-between px-4 py-3 font-bold text-slate-700 list-none outline-none transition-all duration-300 group-open:rounded-b-none"
-                >
-                  Colores
-                  <ChevronDown
-                    size={20}
-                    stroke-width={2}
-                    class="text-slate-400 transition-transform duration-300 group-open:rotate-180"
-                  />
-                </summary>
-                <div
-                  class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-all duration-300 ease-in-out"
-                >
-                  <div class="overflow-hidden">
-                    <div class="px-4 pb-4">
-                      <div class="flex flex-wrap gap-4">
-                        {
-                          pulsera.variaciones_color.map((color) => (
-                            <div class="flex flex-col items-center gap-1.5">
-                              <span
-                                class="size-8 rounded-full border border-slate-200 shadow-sm"
-                                style={`background-color: ${color.hex};`}
-                                title={color.color_nombre}
-                              />
-                              <span class="text-xs text-slate-500">
-                                {color.color_nombre}
-                              </span>
-                            </div>
-                          ))
-                        }
+              {
+                pulsera.variaciones_color && (
+                  <details
+                    class="group rounded-xl border border-slate-200 bg-white overflow-hidden transition-all duration-300"
+                    open
+                  >
+                    <summary class="flex cursor-pointer items-center justify-between px-4 py-3 font-bold text-slate-700 list-none outline-none transition-all duration-300 group-open:rounded-b-none">
+                      Colores
+                      <ChevronDown
+                        size={20}
+                        stroke-width={2}
+                        class="text-slate-400 transition-transform duration-300 group-open:rotate-180"
+                      />
+                    </summary>
+                    <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-all duration-300 ease-in-out">
+                      <div class="overflow-hidden">
+                        <div class="px-4 pb-4">
+                          <div class="flex flex-wrap gap-4">
+                            {pulsera.variaciones_color.map((color) => (
+                              <div class="flex flex-col items-center gap-1.5">
+                                <span
+                                  class="size-8 rounded-full border border-slate-200 shadow-sm"
+                                  style={`background-color: ${color.hex};`}
+                                  title={color.color_nombre}
+                                />
+                                <span class="text-xs text-slate-500">
+                                  {color.color_nombre}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </details>
+                  </details>
+                )
+              }
             </div>
 
             <div
